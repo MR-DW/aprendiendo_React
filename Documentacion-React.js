@@ -3,46 +3,61 @@
 // instala un modulo que permite instalar la app de react y su entorno
 // npm i -g create-reac-app
 // 
-// Instalar react 
+//1- Instalar react 
 // npx create-react-app nombre-app
 
-//Abrir la carpeta de la app en visual
+//2- Abrir la carpeta de la app en visual
 
-// Estructura de archivos
+//3- Estructura de archivos
+// package.json --> Aquí se encuentran las dependencias/librerias que se instalan
 // Node_module --> estos modulos sirven para utilizar y llamar dentro de la app, css, dom, errores, eventos, todas las herramientas de node para poder utilizar/importar.
 // Public --> muestra la info a la que va a tener acceso el usuario final.
-//          index.html --> Obtiene los componentes renderizados de la carpeta Src --> Index.js y es el encargado de plasmar en el navegador la app.
+//          index.html --> Obtiene los componentes renderizados de la carpeta Src --> Index.js y es el encargado de plasmar en el navegador la app. Esto es posible ya que contiene un div con el id root.
 // Src --> es la carpeta que contiene todos nuestros datos y donde le voy a dar forma a la app con los archivos App.js App.css
 //         App.js --> Es donde esta nuestra app, donde escribo mi html y funciones js/ts.
-//         Index.js --> Es donde debo registrar mi app/componentes creados en App.js y renderiza la app.
-//
+//         Index.js --> Es donde debo registrar mi app/template/componentes creados en App.js/archivos similares y renderiza la app/componenete por contener una var que que se comunica con el index.html al asignarle ReactDOM.createRoot(document.getElementByID('root')).
+//                      Se registra al componente entre los tags <React.StrictMode>, como si fuera un tag <NombreArchivo.js />
+//Todos los archivos deben tener sus imports correspondientes.
 // 
-// Para ejecutar la app --> debo levantar el servidor 
+//4- Para ejecutar la app --> debo levantar el servidor 
 // npm start
 
 // Para finalizar la ejecucion --> cortar el servidor
 // ctrl+c
 
-//  Instalar extension en chrome --> react developers tools 
+//5- Instalar extension en chrome --> react developers tools 
 // para adaptar f12 a react
 // 
+//6- App.js Creando componentes.Hay 4 secciones:
+// A --> la parte de arriba que contiene los imports.
+// B --> le sigue la function cuyo nombre es el nombre del componente ( para ser descriptivo). Allí dentro se colocara toda la lógica del componente (JS)
+// c --> el return de la function componente(). Aquí se utilizará un tipeo similar a HTML pero con las modificaciones adecuadas para que react pueda leerlo y construir un html, también se utiliza js {} para poder completar los componentes con datos dinamicos.
+// D --> el export, siempre al final del archivo. Permite que otros archivos como el index.js pueda acceder al componente.
 // 
+// HOOKS --> permite cambiar el DOM de manera dinamica, van colocados en la parte de la logica B y debe importarse el useState A. En la parte de la logica va a obtener un elemento html (C) para poder modificar la funcion este elemento de la parte C debe tener la funcion y un event listener.
+// import {useState} from 'react'
 // 
+// ej: CONTADOR: Use State
+// se crea la var que almacena el valor y el metodo/función que modifica ese valor.
 // 
+// function App(){
+//   const[contador,setContador] = useState(0)
+
+//   const aumentar = () => {
+//      setContador(contador + 1);
 // 
+//  }
+//  const decrementar = () => {
+//      setContador(contador - 1);
 // 
+//  }
+//  return( 
+//      <button onClick={aumentar} type=""> Aumentar </button>
+//       <button onClick={decrementar} type=""> Decrementar </button>
+//        )
+// }
 // 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
+//  ej: Use efect
 // 
 // 
 // 
