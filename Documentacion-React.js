@@ -34,32 +34,111 @@
 // c --> el return de la function componente(). Aquí se utilizará un tipeo similar a HTML pero con las modificaciones adecuadas para que react pueda leerlo y construir un html, también se utiliza js {} para poder completar los componentes con datos dinamicos.
 // D --> el export, siempre al final del archivo. Permite que otros archivos como el index.js pueda acceder al componente.
 // 
-// HOOKS --> permite cambiar el DOM de manera dinamica, van colocados en la parte de la logica B y debe importarse el useState A. En la parte de la logica va a obtener un elemento html (C) para poder modificar la funcion este elemento de la parte C debe tener la funcion y un event listener.
-// import {useState} from 'react'
+// 7 - Trabajo con JSX: 
 // 
-// ej: CONTADOR: Use State
-// se crea la var que almacena el valor y el metodo/función que modifica ese valor.
+// Es el uso de JS para asignar valores dinamicos a los tags html, mediante el uso de {}.
+// Tambien variables de js que contienen tags de html. Para luego podes devolverlo en el return (parte C), mediante el uso de la var entre {}.
 // 
-// function App(){
-//   const[contador,setContador] = useState(0)
+// Para comentar linead {/* */}
+// 
+// CREACION DE COMPONENTES:
+// Los componentes siempre van con Mayuscula tanto para crealos en la funcion del render, en el export de salida, en el import del App.js y en la instanciacion del componente.
+// Pueden haber componentes dentro de componentes, componentes dentro del componente principal App.js y componentes mas grandes que formen templates que van a tener el mismo protagonismo que el componente principal App.js
+// 
+// 8 - TRABAJO CON FUNCIONES PARA LA CREACION DE COMPONENTES:
+// Realizar los imports correspondientes:
+// import logo from './logo.svg';
+// import './App.css';
+// import componente
+// import Welcome from './components/welcome';
+// 
+// PARTE LOGICA:
+// 
+// Los componentes f() aceptan props que son los atributos y metodos que tienen, que desciben lo que deben aparecer. Este props puede ser otro componente, objeto, elemento html.
+// para acceder a l mismo accedo mediante {props.name}, para podes acceder al json que devuelve el back-end. 
+// Funciones Puras --> no modifican el props. Todas deben ser puras.
+// Funciones IMpuras --> se accede a una propiedad del atributo prop.
+// 
+// function App(props) {
+//   return (
+//     <div className="App">
+//       <header className="App-header">
+//         <img src={logo} className="App-logo" alt="logo" />
+//         <div>
+//           <Welcome />
+//         </div>
+//       </header>
+//     </div>
+//   );
+// }
 
-//   const aumentar = () => {
-//      setContador(contador + 1);
+// export default App;
 // 
-//  }
-//  const decrementar = () => {
-//      setContador(contador - 1);
+// Creacion de componente en archivo externo:
+// Dentro de la carpeta src, creamos una subcarpeta llamada componentes, allí creo el archivo js que va a contener nuestros componennte. 
 // 
-//  }
-//  return( 
-//      <button onClick={aumentar} type=""> Aumentar </button>
-//       <button onClick={decrementar} type=""> Decrementar </button>
-//        )
+// Primero importar: 
+// import React from 'react;
+// 
+// En este nuevo archivo voy a crear una f() con su determinado nombre y su return. 
+// 
+// function Welcome(){
+
+//      return (
+//               <p>{gente}, como andas?</p>
+//      )
+// }
+
+// A la App.js, que es la app central le voy a importar este nuevo archivo.js de la carpeta components.
+// import nombreFuncion from ./components/nombreArchivo
+// 
+// En la parte C (de return/renderizado) utilizamos la funcion importada con formato componente --> <nombreFuncion /> o <nombreFuncion> </nombreFuncion>, esto instancia la funcion que contiene el componente en nuestro componente central App.js
+// function App(props) {
+//   return (
+//     <div className="App">
+//       <header className="App-header">
+//         <img src={logo} className="App-logo" alt="logo" />
+//         <div>
+//           <Welcome />
+//         </div>
+//       </header>
+//     </div>
+//   );
 // }
 // 
-//  ej: Use efect
+// Y luego puedo modificar las expresiones {var} y funcion y return en el componente particular/hijo que esta dentro de la carpeta components. Pudiendo quedar de la siguiente manera:
+// DEPENDENCIAS ---> IMPORTS
+// import React from 'react';
 // 
-// 7- CONSUMOS DE APIS:
+// LOGICA
+// function formatName(prop){
+//      return user.firstName + ' ' + user.lastName;
+// }
+// 
+// const user = {
+//      firstName: 'Matias',
+//      lastName: 'Perez'
+// };
+// 
+// const element = (
+//  <h1> Hello, {formatName(user)} </h1>
+// );
+// 
+// RENDER
+// function Saludo(){
+//      return (
+//          <p>Hola, desde Welcome {element}</p>
+//      )
+// }
+// 
+// EXPORT/SALIDA
+// export default Saludo;
+// 
+// Tambien puedo utilizar el componente hijo a la par de la central, instanciando el componente en el archivo index.js (controlador centrar de componentes), se usa para comonentes que son templates.
+
+// 
+
+// 9 - CONSUMOS DE APIS Y TRABAJO CON CLASES PARA LA CREACION DEL COMPONENTE:
 // import React, {Component} from 'react' --> importar los componentes de react
 
 //PARTE LOGICA:
@@ -151,10 +230,30 @@
 //
 //  export default App
 // 
+// 10 - HOOKS --> permite cambiar el DOM de manera dinamica, van colocados en la parte de la logica B y debe importarse el useState A. En la parte de la logica va a obtener un elemento html (C) para poder modificar la funcion este elemento de la parte C debe tener la funcion y un event listener.
+// import {useState} from 'react'
 // 
+// ej: CONTADOR: Use State
+// se crea la var que almacena el valor y el metodo/función que modifica ese valor.
 // 
+// function App(){
+//   const[contador,setContador] = useState(0)
+
+//   const aumentar = () => {
+//      setContador(contador + 1);
 // 
+//  }
+//  const decrementar = () => {
+//      setContador(contador - 1);
 // 
+//  }
+//  return( 
+//      <button onClick={aumentar} type=""> Aumentar </button>
+//       <button onClick={decrementar} type=""> Decrementar </button>
+//        )
+// }
+// 
+//  ej: Use efect
 // 
 // 
 // 
