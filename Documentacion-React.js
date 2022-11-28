@@ -55,7 +55,7 @@
 // PARTE LOGICA:
 // 
 // Los componentes f() aceptan props que son los atributos y metodos que tienen, que desciben lo que deben aparecer. Este props puede ser otro componente, objeto, elemento html.
-// para acceder a l mismo accedo mediante {props.name}, para podes acceder al json que devuelve el back-end. 
+// para acceder al mismo accedo mediante {props.name}, para podes acceder al json que devuelve el back-end. 
 // Funciones Puras --> no modifican el props. Todas deben ser puras.
 // Funciones IMpuras --> se accede a una propiedad del atributo prop.
 // 
@@ -136,15 +136,60 @@
 // 
 // Tambien puedo utilizar el componente hijo a la par de la central, instanciando el componente en el archivo index.js (controlador centrar de componentes), se usa para comonentes que son templates.
 
+// 9 - HOOKS --> permite cambiar el DOM de manera dinamica, van colocados en la parte de la logica B y debe importarse el useState A. En la parte de la logica va a obtener un elemento html (C) para poder modificar la funcion este elemento de la parte C debe tener la funcion y un event listener.
+// import {useState} from 'react'. Se utilizan con los componentes de funciones, no con las clases.
 // 
+// ej: CONTADOR: Use State
+// se crea la var que almacena el valor y el metodo/función que modifica ese valor.
+// 
+// function App(){
+//   const[contador,setContador] = useState(0)
+//            var,  metodo
 
-// 9 - CONSUMOS DE APIS Y TRABAJO CON CLASES PARA LA CREACION DEL COMPONENTE:
+//   const aumentar = () => {
+//      setContador(contador + 1);
+// 
+//  }
+//  const decrementar = () => {
+//      setContador(contador - 1);
+// 
+//  }
+//  return( 
+//      <button onClick={aumentar} type=""> Aumentar </button>
+//       <button onClick={decrementar} type=""> Decrementar </button>
+//        )
+// }
+// 
+//  ej: Use efect --> contiene como valor un estado y produce un efecto capturando informacion externa y se la brindo al componente, se utiliza para el consumo de apis.
+// import React, {useEffect} from 'react; --> Primero se realiza el import correspondiente. se crea dentro de la función principal.
+// 
+// Luego se crea la funcion useEffect(){} que consuma la api:
+// 
+// useEffect(() => {
+//      let nombreVar;
+//      nombreVar = window.navigator /---> Para que cuando la pantalla se cargue consuma la api./ .geolocation /-->tipo de api a consumir/ .watchPosition(position => {
+//          setCoordenadas /---> nombre del set que modifica y consume la api de coordenadas en este caso, es el creado en la var de la funcion principal./ ({
+//              longitud: position.coords.longitude, /--> propiedad creada para setearle la info traida de la api./
+//              latitud: position.coords.latitude /---> propiedad creada para setearle la info traida de la api./
+//              });
+//          });
+// 
+//      return () => {
+//          navigaor.geolocation.clearWatch(nombreVar); /--> indica que apague el consumo de la api./
+//      };
+// });
+// 
+// useE
+
+// 10 - CONSUMOS DE APIS Y TRABAJO CON CLASES PARA LA CREACION DEL COMPONENTE:
 // import React, {Component} from 'react' --> importar los componentes de react
 
 //PARTE LOGICA:
 
 // Vamos a cambiar la funcion principal (parte B y C) por una class, para poder acceder a sus metodos y props, ademas ya la función no nos va a retornar un dibujado de pagina,
-// sino que la class va a retornar un renderizado. La class va a heredar (extends) de Component, sus props y metodos. Dentro del render (), se ejecuta la parte C. Antes del render la parte B.
+// sino que la class va a retornar un renderizado. La class va a heredar (extends) de Component, sus props y metodos. 
+// Dentro del render (), se ejecuta la parte C. 
+// Antes del render, la parte B, se encuentra la lógica, habiendo un 
 // El metodo contructor recibe props, que va a tener una propiedad llamada state(estado, que va a cambiar segun la info que le pasemos a la props). Y dentro de state van a recibir los posts.
 // Otro metodo a utilizar es el  componentDidMount(){}, que indica que cuando se inicialice el componente se ejecutará todo lo que esté entre llaves. En este caso el llamado a la api.
 // en una var const se va a almacenar el url de la api. Luego utilizamos el metodo fetch para poder acceder a la api (como con java script). Seguido se utiliza un .then para acceder al objeto
@@ -160,11 +205,14 @@
 //          }
 //      }
 // 
-//      componentDidMount(){
+//      componentDidMount(){  """Requiere si o si de este clase para poder consumir apis, las funciones no. Esta clase consume la api al actualizar/cargar la pagina."""
 //          const urlAPI = 'https'
 //          fetch(urlAPI)
 //          .then(response => response.json)
 //          .then(json => this.setState(posts:json))
+//      }
+//      cmponentWillUnmount(){      """Esta clase corta el pedido de la api, al cambiar de pestaña o salir de la pagina."""
+// 
 //      }
 // 
 //      render(){
@@ -230,30 +278,6 @@
 //
 //  export default App
 // 
-// 10 - HOOKS --> permite cambiar el DOM de manera dinamica, van colocados en la parte de la logica B y debe importarse el useState A. En la parte de la logica va a obtener un elemento html (C) para poder modificar la funcion este elemento de la parte C debe tener la funcion y un event listener.
-// import {useState} from 'react'
-// 
-// ej: CONTADOR: Use State
-// se crea la var que almacena el valor y el metodo/función que modifica ese valor.
-// 
-// function App(){
-//   const[contador,setContador] = useState(0)
-
-//   const aumentar = () => {
-//      setContador(contador + 1);
-// 
-//  }
-//  const decrementar = () => {
-//      setContador(contador - 1);
-// 
-//  }
-//  return( 
-//      <button onClick={aumentar} type=""> Aumentar </button>
-//       <button onClick={decrementar} type=""> Decrementar </button>
-//        )
-// }
-// 
-//  ej: Use efect
 // 
 // 
 // 
