@@ -13,7 +13,11 @@
 // Node_module --> estos modulos sirven para utilizar y llamar dentro de la app, css, dom, errores, eventos, todas las herramientas de node para poder utilizar/importar.
 // Public --> muestra la info a la que va a tener acceso el usuario final.
 //          index.html --> Obtiene los componentes renderizados de la carpeta Src --> Index.js y es el encargado de plasmar en el navegador la app. Esto es posible ya que contiene un div con el id root.
-// Src --> es la carpeta que contiene todos nuestros datos y donde le voy a dar forma a la app con los archivos App.js App.css
+//                         En el <head>, En la etiqueta <title></title> cambias el nombre de la pestaña.
+//          favicon.ico --> imagen de la pestaña.
+//          logo.png --> logos de uso en la app.
+//          
+// Src --> es la carpeta que contiene todos nuestros datos y donde le voy a dar forma a la app con los archivos App.js App.css(estilos del componente raiz App.js)
 //         App.js --> Es donde esta nuestra app, donde escribo mi html y funciones js/ts.
 //         Index.js --> Es donde debo registrar mi app/template/componentes creados en App.js/archivos similares y renderiza la app/componenete por contener una var que que se comunica con el index.html al asignarle ReactDOM.createRoot(document.getElementByID('root')).
 //                      Se registra al componente entre los tags <React.StrictMode>, como si fuera un tag <NombreArchivo.js />
@@ -36,16 +40,69 @@
 // 
 // 7 - Trabajo con JSX: 
 // 
-// Es el uso de JS para asignar valores dinamicos a los tags html, mediante el uso de {}.
+// Es el uso de JS para asignar valores dinamicos a una estructura similar a html, que sería xml, mediante el uso de {}.
 // Tambien variables de js que contienen tags de html. Para luego podes devolverlo en el return (parte C), mediante el uso de la var entre {}.
-// 
+// ej: const elemento = <h1> !Hola, Mundo¡ </h1>
+
+// COMENTAR LINEAS:
 // Para comentar linead {/* */}
 // 
-// CREACION DE COMPONENTES:
-// Los componentes siempre van con Mayuscula tanto para crealos en la funcion del render, en el export de salida, en el import del App.js y en la instanciacion del componente.
+// 8 - CREACION DE COMPONENTES:
+// Los componentes siempre van con Mayuscula tanto para crealos en la funcion del render, en el export de salida, en el import del App.js y en la instanciacion del componente. Ademas de en su nombre de archivo, debe ser === al de la f()componente.
 // Pueden haber componentes dentro de componentes, componentes dentro del componente principal App.js y componentes mas grandes que formen templates que van a tener el mismo protagonismo que el componente principal App.js
 // 
-// 8 - TRABAJO CON FUNCIONES PARA LA CREACION DE COMPONENTES:
+// Los elementos son la unidad masbasica de los componentes. Son los tags html con letras minusculas.
+// Los componentes definidos por el usuario creados, son tags con la primer letra en mayuscula.
+// A ambos se le pueden agregar atributos para brindarles caracteristicas.  Los atributos van con camelCase. Atributo que cambian:
+// class="" de html en jsx es className="".
+// for="" html --> htmlFor ="" jsx.
+// Tambien para style de css.
+// background-image de css --> backgroundImage / backgroundColor / fontFamily en jsx.
+// ejemplo:
+// const estiloDiv = {color:'yellow', backgroundColor:'black'};
+// Esto para asignar en forma dinamica o estilos en linea --> style = {estiloDiv}. si utilizo el estilo directo en linea style = {{color: 'yellow'}} la primer llave indica que se inserta JS y la segunda para indicar que se cree el objeto JS.
+//  Sino en archivo aparte.
+// 
+// Lista de atributos del DOM reconocidos por react --> https://es.reactjs.org/docs/dom-elements.html
+// 
+
+// Cuando se crea un componente que será utilizado como elemento de otro componente y este será utilizado en un tercer componente mayor, a la hora de realizar los imports y exports de las funciones componentes es muy importante:
+// se puede poner al inicio de la f()componente un export, para indicar que a toda la f()componente se exportará para hacer uso de la misma en una f()componente mayor.
+// La f()componente mayor deberá importar haciendo uso de {} y solo indicando de donde proviene ese archiv con './nombreArchivo'.
+// Ejemplos: exportacion nombrada
+// Componente más chico --> export function ComponenteMasChico(){}
+// Componente Padre --> import {ComponenteMasChico} from './ComponenteMasChico'
+// otra manera: exportacion por defecto
+// componente mas chico, al final de todo el codigo ---> export default ComponenteMasChico;
+// Componente Padre ---> import ComponenteMasChico from './ComponenteMasChico'; (va sin {})
+// 
+// Uso de JS en elementos y componentes:
+// dentro del tag, ya sea en un atributo o en el espacio destinado para devolver contenido se colocan {} y dentro de las mismas el nombre de la funcion JS, una prop.metodoJS() o directamente una operacion JS (como maps,filter, find o f()).
+// 
+
+// ESTADO DEL COMPONENTE --> Es la info de un componente y sus valores actuales. Son propiedades sque el asigno a mi componente al igual que sus valores. se representan cmo un diccionario.
+// En un momento especifico durante la ejecucion de la app. El estado puede ir cambiando segun las funciones asignadas al componente.
+// 
+// 9 - ESTRUCTURA DE UN COMPONENTE:
+// los elementos pueden ser anidados en jsx con identacion para formar estructuras mas complejos, elem > elem, elem > compo, compo > compo.
+// Renderizar componentes:
+// a traves del root, mediante el atributo id='root', en un div en el archivo index.js -->
+// 
+// Otra manera -->
+// 
+// import ReactDOM from 'react-dom';
+// 
+// const elemeno = <h1> !Hola, Mundo¡ </h1>;
+// ReactDOM.render(
+//      elemento,
+//      document.getElementById('root') 
+// );
+// 
+// en la creación de un componente que este en blanco si poemos rfc y luego aceptamos la primera opcion que nos da, nos inicia basicamente el compo.
+
+// 10 - TRABAJO CON FUNCIONES PARA LA CREACION DE COMPONENTES:
+// Los hooks, son quienes permiten acceder y trabajar con los estados del componente funcional.
+// 
 // Realizar los imports correspondientes:
 // import logo from './logo.svg';
 // import './App.css';
@@ -93,7 +150,10 @@
 // import nombreFuncion from ./components/nombreArchivo
 // 
 // En la parte C (de return/renderizado) utilizamos la funcion importada con formato componente --> <nombreFuncion /> o <nombreFuncion> </nombreFuncion>, esto instancia la funcion que contiene el componente en nuestro componente central App.js
-// function App(props) {
+// El componente debe estar englobado en un div (pero esto ocaciona que a la hora de maquetar o estilar provoque errores por superpocision de muchos divs) por lo que se recomienda utiliza Fragments ---> <> <Componente/> </> o <Fragment> <Componente /> </Fragment>
+// Para utilizar esta segunda manera de englobar, se debe importar un destructuring Fragment --> import React {Fragment} from 'react; ---> por lo general va el Fragment en el mismo import que los Hooks.
+// 
+//  function App(props) {
 //   return (
 //     <div className="App">
 //       <header className="App-header">
@@ -105,6 +165,8 @@
 //     </div>
 //   );
 // }
+// 
+// Los eventos en los tags html-jsx, se colocan como en html, con el nombre del evento y asignandole entre {la f() que ejecuta el evento} por ej ---> onClick={clickSuma};
 // 
 // Y luego puedo modificar las expresiones {var} y funcion y return en el componente particular/hijo que esta dentro de la carpeta components. Pudiendo quedar de la siguiente manera:
 // DEPENDENCIAS ---> IMPORTS
@@ -136,7 +198,8 @@
 // 
 // Tambien puedo utilizar el componente hijo a la par de la central, instanciando el componente en el archivo index.js (controlador centrar de componentes), se usa para comonentes que son templates.
 
-// 9 - HOOKS --> permite cambiar el DOM de manera dinamica, van colocados en la parte de la logica B y debe importarse el useState A. En la parte de la logica va a obtener un elemento html (C) para poder modificar la funcion este elemento de la parte C debe tener la funcion y un event listener.
+// 10 - HOOKS --> permite cambiar el DOM de manera dinamica, ya que modifican el estado de un componente de funcion.
+// Van colocados en la parte de la logica B y debe importarse el useState A. En la parte de la logica va a obtener un elemento html (C) para poder modificar la funcion este elemento de la parte C debe tener la funcion y un event listener.
 // import {useState} from 'react'. Se utilizan con los componentes de funciones, no con las clases.
 // 
 // ej: CONTADOR: Use State
@@ -144,7 +207,7 @@
 // 
 // function App(){
 //   const[contador,setContador] = useState(0)
-//            var,  metodo
+//            var,  metodo, utiiza el nombre de la var para identificar el set personalizado.
 
 //   const aumentar = () => {
 //      setContador(contador + 1);
@@ -179,9 +242,24 @@
 //      };
 // });
 // 
-// useE
+// useRef ---> Permite establecer referencias de los tags html-jsx, con una var const que se le asigna el metodo useRef() se debe importar {useRef} en el mismo import de los hooks o del {Fragment} --> import React {useRef} from 'react'; 
+// Se le coloca un atributo --> ref = {nombreFuncionRef} --> en el tag html-jsx (parte C) y luego en la parte B, de logica se crea una var const con el mismo nombre asignado a la ref. --> const nombreFuncionRef = useRef();
+// Y luego a la referencia (var const que se le asigno useRef()), se la puede utilizar en cualquier función que ejerza un efecto sobre ese tags html-jsx
+// 
+// METODOS PROPIOS DE LOS HOOKS (averiguar):
+// .current -->
+// .value -->
+// localStorage -->
 
-// 10 - CONSUMOS DE APIS Y TRABAJO CON CLASES PARA LA CREACION DEL COMPONENTE:
+// 11 - EVENT LISTENER O EVENT HANDLER:
+// Son funciones que se ejecutan cuando ocurre un evento especifico. Gralmente ejecutan la funcion de los hooks.
+// 
+// 
+// 
+// 
+
+// 12 - CONSUMOS DE APIS Y TRABAJO CON CLASES PARA LA CREACION DEL COMPONENTE:
+// Los componentes de clases trabajan con sus propios estados.
 // import React, {Component} from 'react' --> importar los componentes de react
 
 //PARTE LOGICA:
@@ -196,8 +274,10 @@
 //  y mediante la funcion (res => res.json()), traducir toda la data de la api a formato json y asi poder acceder a la misma. 
 // Luego con otro .then accedemos al json con otra funcion flecha (json => this.state(post:json)), de esta manera se accede al json que contiene la data de la API, con this.state estoy
 // accediendo a las props y metodos del metodo constructor de la clase principal y como argumentos le asigno a la propiedad posts el json con la data de la api.
-//
-// class App extends Component {
+//this. --> es para acceder al componente de class.
+// React.Component --> para poder utilizar todas las funcionesbasicas de un componente de react. Si se importa {components} no hacer falta ponerle el React.
+// 
+// class App extends React.Component {
 //      constructor(props) {
 //          super(props);
 //          this.state = {
@@ -278,21 +358,38 @@
 //
 //  export default App
 // 
+// 13 - Añadir estilos a los componentes:
+// Se debe crear una carpeta styleshit dentro de la carpeta src, allí se contendran los archivos css, 1 por cada componente/elemento, que tendrán el mismo nombre que su componente/elmento.
+// Luego se aplica css comun. En el archivoComponente.jsx debe importarse su css --> import '../nombre-carpeta/nombreComponente.css' --> los dos puntos indica que debe salir de su ubicación para ir a src y de allí entrar a la carpeta contenedora de archivos css.
+// App.css --> son los estilos aplicados para el componente raiz. App.js debe tener este import --> import './App.css';
 // 
+// 14 - RECIBIR PROPS DE UN COMPONENTE:
+// Necesitamos props para poder crear componentes reutilizables sin elementos fijos. Los props se definen en los argumentos de la f()componente.
+// ejemplo:
+// export function Componente(props){
 // 
+// }
 // 
+// Luego hay que analizar que contenido debe personalizarse (nombres, fotos, valores, textos, etc)
+// export function Componente(props){
+//      return(
+//              <p className='nombre-testimonio'>
+//                  {props.nombre} en {props.pais}
+//              </p>
+//      ) 
+// };
 // 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
+// En el componente raiz App.js, vamos a agregar al tag jsx componente <Componente />, como atributos los props declarados en el componente/elemnto hijo con su valor:
+//export function Componente(props){
+//      return(  
+//              <Componente 
+//                  nombre='Matias'
+//                  pais='Perez'
+//              />
+//      )
+// Para imagenes se hace asi:
+// <img className='imagen-testimonio' src={require(`../carpeta-contenedora/nombre-imagen-${props.imagen}.formato`)} alt='Foto de Emma' />
+// Se utiliza backsticks para poder utilizar ${} y allí brindarle un valor dinamico. props.imagen refiere a la parte del archivo imagen que cambia para identificar cada imagen particular.
 // 
 // 
 // 
