@@ -203,11 +203,16 @@
 // import {useState} from 'react'. Se utilizan con los componentes de funciones, no con las clases.
 // 
 // ej: CONTADOR: Use State
-// se crea la var que almacena el valor y el metodo/función que modifica ese valor.
+// se crea la var que almacena el valor y el metodo/función que modifica ese valor. Se le asigna el valor retornado por el useState.
+// Luego creo una función que va a ser quien ejecute las modificaciones de los valores iniciales para obtener nuevos.
+// Para asignar esta funcion, si se le asigna a un tag jsx se lo paso a un atributo EventListener. Si es un componenteHijo/elemento se lo paso a la props que utilice en la f()componenteHijo por ej: 
 // 
+// Componente padre:
+
 // function App(){
-//   const[contador,setContador] = useState(0)
-//            var,  metodo, utiiza el nombre de la var para identificar el set personalizado.
+//   const[contador,setContador] = useState(0) --> el param es el estado inicial con el que comienza. 
+//          [contador -->  var(adopta el valor inicial que se le pasa al useState, luego va a adoptar los valores que sean modificados por el setPersonalizado(setContador) que va a modificar el useState() y este le va a asignar el nuevo valor a la var),
+//          , setContador] --> metodo, utiiza el nombre de la var para identificar el set personalizado. Modifica el useState() asignandole nuevos valores que luego se los asignara a la var.
 
 //   const aumentar = () => {
 //      setContador(contador + 1);
@@ -218,10 +223,22 @@
 // 
 //  }
 //  return( 
-//      <button onClick={aumentar} type=""> Aumentar </button>
-//       <button onClick={decrementar} type=""> Decrementar </button>
+//      <button onClick={aumentar} type=""> Aumentar </button>        """Pasa la función del useState como atributo de EventListener onClick, ya que es un tags jsx"""
+//      <button onClick={decrementar} type=""> Decrementar </button>
+//      <Contador numClicks='5' />       """Como es un componenteHijo/elemento requiere de la props numClicks (definida en su f()componente para poder brindarle la funcionalidad del useState.""" 
 //        )
 // }
+// 
+// Elemento/componenteHijo:
+// 
+// export function Contador({ numClicks }) {
+//   return (
+//     <div className='contador'>
+//         { numClicks }
+//     </div>
+//   )
+// }
+
 // 
 //  ej: Use efect --> contiene como valor un estado y produce un efecto capturando informacion externa y se la brindo al componente, se utiliza para el consumo de apis.
 // import React, {useEffect} from 'react; --> Primero se realiza el import correspondiente. se crea dentro de la función principal.
@@ -251,14 +268,193 @@
 // .value -->
 // localStorage -->
 
-// 11 - EVENT LISTENER O EVENT HANDLER:
-// Son funciones que se ejecutan cuando ocurre un evento especifico. Gralmente ejecutan la funcion de los hooks.
+// 11 - RECIBIR PROPS DE UN COMPONENTE:
+// Necesitamos props para poder crear componentes reutilizables sin elementos fijos. Los props se definen en los argumentos de la f()componente.
+// ejemplo:
+// export function Componente(props){
 // 
+// }
 // 
+// Luego hay que analizar que contenido debe personalizarse (nombres, fotos, valores, textos, etc)
+// export function Componente(props){
+//      return(
+//              <p className='nombre-testimonio'>
+//                  {props.nombre} en {props.pais}
+//              </p>
+//      ) 
+// };
 // 
+// En el componente raiz App.js, vamos a agregar al tag jsx componente <Componente />, como atributos los props declarados en el componente/elemnto hijo con su valor:
+//export function Componente(props){
+//      return(  
+//              <Componente 
+//                  nombre='Matias'
+//                  pais='Perez'
+//              />
+//      )
+// Para imagenes se hace asi:
+// <img className='imagen-testimonio' src={require(`../carpeta-contenedora/nombre-imagen-${props.imagen}.formato`)} alt='Foto de Emma' />
+// Se utiliza backsticks para poder utilizar ${} y allí brindarle un valor dinamico. props.imagen refiere a la parte del archivo imagen que cambia para identificar cada imagen particular.
+// 
+// Tambien se puede importar la img directamente al componente:
+// Para ello debo tener la img correspondiente dentro de la carpeta src en una subcarpeta imagenes.
+// Luego realizo el import ---> import nombreImagen from '../imagenes/nombreimg.formato'
+//  se cologa el tag jsx <img> y en el atributo src se le asignan llaves {}, 
+//  <img className='' src={nombreImagen} alt=''/>
+
+// PROPS.CHILDREN -->  Todo lo que este dentro de la f()componente de Boton, será considerada un elemento hijo y podemos usarlo en nuestro componente.
+//
+// Componentehijo/elemento
+//  export function Boton(props) {
+//     return (
+//       <div>
+//           {props.children}
+//       </div>
+//     )
+//   }
+
+// ComponentePadre/raiz --> se utiliza el tag del ComponenteHijo/elemento con tag de apertura y cierre y dentro se coloca el valor deseado, que se le asignara a la props.children
+// function App() {
+//     return (
+  
+//       <div className="App">
+//         <div className="fcc-logo-contenedor">
+//           <img src={ freeCodeCampLogo } className="fcc-logo" alt='Logo De FreeCodeCamp' />
+        
+//         </div>
+//         <div className='contenedor-calculadora'>
+//           <div className='fila'>
+//             <Boton>1</Boton>
+  
+//           </div>
+//           <div className='fila'>
+            
+//           </div>
+//      )
+// }
+
+// 12 - SINTAXIS DE DESESTRUCTURACION:
+// la funcion recibe un objeto (en vez de props), que va como argumento de la funcion y entre {}, el objeto debe ser directamente la prop a la que se desea acceder. Por ejemplo un texto. (reemplazo en la funcion obj por texto.)
+// export function Boton({obj}) {
+//      return (
+//          <button>
+//              {obj}
+//          </button>
+//      )
+// }
+// 
+// 13 - CLASES BASADAS EN CONDICION:
+// Esta metodologia permite definir la clase de un tags jsx segun la funcianalidad del mismo, es decir que bajo un condicional define su class, segun un parametro pasado en la f()componente. Por ejemplo:
+// export function Boton({obj, esBotonClick}) {
+//      return (
+//          <button className={esBotonDeClic ? 'boton-clic' : 'boton-reiniciar'} >
+//              {obj}
+//          </button>
+//      )
+// }
+// 
+// Lo que se le asigna al className= debe estar entre llaves{}, porque de esa manera indicamos que es codigo JS y que va  realizar una f(). Lo pasado en este caso es un condicional de operador ternario, donde pregnta si es boton click
+// toma la clase 'boton-clic', sino 'boton-reiniciar'.
+
+// Otro ejemplo:
+// export function Boton(props) {
+//     return (
+//       <div className={`boton-contenedor ${esOperador(props.children) ? 'operador' : null}`}>
+//           {props.children}
+//       </div>
+//     )
+//   }
+
+// Luego afuera hay que definir la f() esOperador() en la parte logica B.
+// valor es el atributo/parametro
+// 
+// const esOperador = valor => {
+//      return isNaN(valor) && (valor != '.') && (valor != '=')
+// }
 // 
 
-// 12 - CONSUMOS DE APIS Y TRABAJO CON CLASES PARA LA CREACION DEL COMPONENTE:
+// el div contendra un className fijo que es boton-contenedor y se le agregará uno mas segun el valor que adopte props.children, mediante la funcion esOperador, si esta funcion es true, se le sumara la className operador, de lo contrario no se suma ninguna clase mas.
+// como estamos utilizando una f() dentro del tag jsx, es necesario abrir {} y dentro utilizar backsticks ``, para luego con asignación de JS utilizar ${} para allí desarrollar el codigo JS correspondiente.
+
+// 14 - EVENT LISTENER O EVENT HANDLER:
+// Son funciones que se ejecutan cuando ocurre un evento especifico. Gralmente ejecutan la funcion de los hooks.
+// Tambien se le puede asignar un evento a nuestro tags jsx, pasandole un argumento a la f()componente:
+// export function Boton({texto, esBotonDeClic, manejarClic}) {
+//   return (
+//      <button className={ esBotonDeClic ? 'boton-clic' : 'boton-reiniciar' } onClick={manejarClic}>
+//          {texto}
+//      </button>
+//   )
+// }
+// Como este es un elemento/componente hijo, luego cuando se lo importe y agregue al componente padre, allí dentro de su f()componente en la parte B de logica, creo las funciones flechas necesarias para asignarselas a la propiedad (en este caso manejarclick) del componente hijo:
+// function App() {
+//      const manejarClick = () => {
+//      console.log('click');
+//      }
+//      return (
+//          <Boton 
+//              texto='Click'
+//              esBotonDeClick={true}
+//              manejarClick={manejarClick}
+//          />
+//      )
+// }
+// 
+// usando useState en la funcion manejar click creada anteriormente:
+// 
+
+// function App() {
+//      
+//      const [numClicks, setNumClicks] = useState(0);
+//      
+//      const manejarClick = () => {
+//      setNumClicks(numClicks + 1);  
+//      }
+//      
+//      return (
+//          <Contador 
+//              numClicks={ numClicks } 
+//          />
+//          <Boton 
+//              texto='Click'
+//              esBotonDeClick={true}
+//              manejarClick={ manejarClick }
+//          />
+//      )
+// }
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+//
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+//
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+//
+
+// 15 - CONSUMOS DE APIS Y TRABAJO CON CLASES PARA LA CREACION DEL COMPONENTE:
 // Los componentes de clases trabajan con sus propios estados.
 // import React, {Component} from 'react' --> importar los componentes de react
 
@@ -358,42 +554,12 @@
 //
 //  export default App
 // 
-// 13 - Añadir estilos a los componentes:
+// 16 - Añadir estilos a los componentes:
 // Se debe crear una carpeta styleshit dentro de la carpeta src, allí se contendran los archivos css, 1 por cada componente/elemento, que tendrán el mismo nombre que su componente/elmento.
 // Luego se aplica css comun. En el archivoComponente.jsx debe importarse su css --> import '../nombre-carpeta/nombreComponente.css' --> los dos puntos indica que debe salir de su ubicación para ir a src y de allí entrar a la carpeta contenedora de archivos css.
 // App.css --> son los estilos aplicados para el componente raiz. App.js debe tener este import --> import './App.css';
 // 
-// 14 - RECIBIR PROPS DE UN COMPONENTE:
-// Necesitamos props para poder crear componentes reutilizables sin elementos fijos. Los props se definen en los argumentos de la f()componente.
-// ejemplo:
-// export function Componente(props){
-// 
-// }
-// 
-// Luego hay que analizar que contenido debe personalizarse (nombres, fotos, valores, textos, etc)
-// export function Componente(props){
-//      return(
-//              <p className='nombre-testimonio'>
-//                  {props.nombre} en {props.pais}
-//              </p>
-//      ) 
-// };
-// 
-// En el componente raiz App.js, vamos a agregar al tag jsx componente <Componente />, como atributos los props declarados en el componente/elemnto hijo con su valor:
-//export function Componente(props){
-//      return(  
-//              <Componente 
-//                  nombre='Matias'
-//                  pais='Perez'
-//              />
-//      )
-// Para imagenes se hace asi:
-// <img className='imagen-testimonio' src={require(`../carpeta-contenedora/nombre-imagen-${props.imagen}.formato`)} alt='Foto de Emma' />
-// Se utiliza backsticks para poder utilizar ${} y allí brindarle un valor dinamico. props.imagen refiere a la parte del archivo imagen que cambia para identificar cada imagen particular.
-// 
-// 
-// 
-// 
+
 // 
 // 
 // 
